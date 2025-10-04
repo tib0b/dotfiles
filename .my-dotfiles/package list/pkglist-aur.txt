@@ -1,0 +1,8 @@
+an-anime-game-launcher-bin
+gowall
+intellij-idea-ultimate-edition
+quartus-free
+stm32cubeclt
+stm32cubemx
+surfshark-client
+visual-studio-code-bin

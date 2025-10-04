@@ -1,0 +1,252 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/polybar/polybar
+;
+;   The README contains a lot of information
+;
+;==========================================================
+
+[colors]
+background = #959493
+background-alt = #000000
+foreground = #21201F
+foreground-alt = #9e9e9e
+primary = #ffeda3
+secondary = #e60053
+alert = #FF0000
+
+[bar/example]
+monitor = ${env:MONITOR:}
+width = 100%
+height = 22
+radius = 0.0
+fixed-center = true
+top = yes
+bottom = no
+override-redirect = false
+
+foreground = ${colors.foreground-alt}
+background = ${colors.background-alt}
+
+; Under-/overline pixel size and argb color
+; Individual values can be defined using:
+;   {overline,underline}-size
+;   {overline,underline}-color
+line-size = 1
+line-color = #dfdfdf
+
+border-top-size = 0
+border-bottom-size = 0
+border-left-size = 0
+border-right-size = 0
+
+padding-left = 0
+padding-right = 1
+
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = Hack:pixelsize=9;3
+font-2 = "Wuncon Siji:pixelsize=10;3"
+font-3 = Weather Icons:style=Regular:size=10;2
+font-1 = FontAwesome5Free:style=Solid:pixelsize=10;3
+font-4 = "Font Awesome 6 Free Solid:size=10;2"
+
+
+modules-left = i3 
+modules-right = battery sp1 volume sp1 memory sp1 cpu sp1 date 
+
+
+wm-restack = i3
+
+scroll-up = #i3.next
+scroll-down = #i3.prev
+
+cursor-click = pointer
+
+[module/sp1]
+type = custom/text
+content = " | "
+content-foreground = #93A1A1
+content-background = ${colors.background-alt}
+
+[module/sp2]
+type = custom/text
+content = " |"
+content-foreground = #93A1A1
+content-background = ${colors.background-alt}
+
+[module/battery]
+type = internal/battery
+
+battery = BAT0
+adapter = AC
+
+format-charging = <animation-charging> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+format-full = <ramp-capacity> <label-full>
+
+label-charging = %percentage%%
+label-discharging = %percentage%%
+label-full = %percentage%%
+
+animation-charging-foreground = ${colors.primary}
+ramp-capacity-foreground = ${colors.primary}
+
+ramp-capacity-0 =  
+ramp-capacity-1 =  
+ramp-capacity-2 =  
+ramp-capacity-3 =  
+ramp-capacity-4 = 
+
+bar-capacity-width = 10
+bar-capacity-color = ${colors.primary}
+
+animation-charging-0 =  
+animation-charging-1 =  
+animation-charging-2 =  
+animation-charging-3 =  
+animation-charging-4 = 
+animation-charging-framerate = 500
+
+animation-low-0 = !
+animation-low-1 = 
+animation-low-framerate = 200
+
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+strip-wsnumbers = false
+enable-click = true
+enable-scroll = false
+
+label-mode = %mode%
+label-mode-padding = 1
+label-mode-foreground = ${colors.foreground-alt}
+label-mode-background = ${colors.background-alt}
+
+; focused = Active workspace on focused monitor
+label-focused = %index%
+label-focused-foreground = ${colors.foreground}
+label-focused-background = ${colors.background}
+label-focused-underline = ${colors.foreground-alt}
+label-focused-padding = 1
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %index%
+label-unfocused-padding = ${self.label-focused-padding}
+label-unfocused-foreground = ${colors.foreground-alt}
+label-unfocused-background = ${colors.background-alt}
+
+; visible = Active workspace on unfocused monitor
+label-visible = %index%
+label-visible-foreground = ${self.label-focused-background}
+label-visible-background = ${self.label-focused-foreground}
+label-visible-underline = ${self.label-focused-underline}
+label-visible-padding = ${self.label-focused-padding}
+
+; urgent = Workspace with urgency hint set
+label-urgent = %index%
+label-urgent-foreground = ${colors.foreground}
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 1
+
+; Separator in between workspaces
+label-separator =
+label-separator-padding = 0
+label-separator-foreground = #fff
+
+[module/info-hackspeed]
+type = custom/script
+exec = ~/.config/polybar/scripts/info-hackspeed.sh
+tail = true
+
+[module/weather]
+type = custom/script
+exec = ~/.config/polybar/scripts/weather-openmap.sh
+interval = 600
+
+[module/linux-ver]
+type = custom/script
+exec = uname -r
+interval = 600
+
+[module/updates]
+type = custom/script
+exec = ~/.config/polybar/scripts/arch_updates.sh
+interval = 60
+label = %output%
+
+[module/date]
+type = internal/date
+interval = 1
+
+date = %H:%M
+date-alt = %Y-%d-%m %H:%M:%S
+
+format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-background = ${colors.background-alt}
+
+label = %date%
+label-foreground = ${colors.foreground-alt}
+label-background = ${colors.background-alt}
+
+[module/volume]
+type = internal/pulseaudio
+
+format-volume-prefix = "VOL "
+format-volume-prefix-foreground = ${colors.primary}
+format-volume = <label-volume>
+
+label-volume = %percentage%%
+
+label-muted = muted
+label-muted-foreground = ${colors.disabled}
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = "RAM "
+format-prefix-foreground = ${colors.primary}
+label = %percentage_used:2%%
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = "CPU "
+format-prefix-foreground = ${colors.primary}
+label = %percentage:2%%
+
+[module/info-timew]
+type = custom/script
+exec = ~/.config/polybar/scripts/info-timew.sh
+interval = 0.1
+click-left = ~/.config/polybar/scripts/info-timew.sh --toggle
+click-right = ~/.config/polybar/scripts/info-timew.sh --weekday
+
+[settings]
+throttle-output = 5
+throttle-output-for = 10
+;throttle-input-for = 30
+screenchange-reload = true
+compositing-background = over
+compositing-foreground = over
+compositing-overline = over
+compositing-border = over
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
